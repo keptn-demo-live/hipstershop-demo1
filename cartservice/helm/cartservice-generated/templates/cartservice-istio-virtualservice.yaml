@@ -14,6 +14,6 @@ spec:
   - route:
     - destination:
         host: cartservice-canary.hipstershop-staging.svc.cluster.local
+      weight: 100
     - destination:
         host: cartservice-primary.hipstershop-staging.svc.cluster.local
-      weight: 100
