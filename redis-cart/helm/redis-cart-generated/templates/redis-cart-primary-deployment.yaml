@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: redis-cart-primary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-cart-primary
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: redis-cart-primary
+        app.kubernetes.io/instance: redis-cart-canary
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: redis-cart-primary
+        app.kubernetes.io/part-of: keptn-hipstershop-staging
+        app.kubernetes.io/version: alpine
+    spec:
+      containers:
+      - env:
+        - name: DT_CUSTOM_PROP
+          value: keptn_project=hipstershop keptn_service=redis-cart keptn_stage=staging
+            keptn_deployment=primary
+        image: redis:alpine
+        livenessProbe:
+          periodSeconds: 5
+          tcpSocket:
+            port: 6379
+        name: redis
+        ports:
+        - containerPort: 6379
+        readinessProbe:
+          periodSeconds: 5
+          tcpSocket:
+            port: 6379
+        resources:
+          limits:
+            cpu: 125m
+            memory: 256Mi
+          requests:
+            cpu: 70m
+            memory: 200Mi
+        volumeMounts:
+        - mountPath: /data
+          name: redis-data
+      imagePullSecrets:
+      - name: regcred
+      volumes:
+      - emptyDir: {}
+        name: redis-data
+status: {}
