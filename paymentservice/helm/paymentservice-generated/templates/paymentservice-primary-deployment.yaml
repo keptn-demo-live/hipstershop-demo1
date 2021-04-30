@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: paymentservice-primary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paymentservice-primary
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: paymentservice-primary
+        app.kubernetes.io/instance: paymentservice-canary
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: paymentservice-primary
+        app.kubernetes.io/part-of: keptn-hipstershop-staging
+        app.kubernetes.io/version: 9e830c2
+    spec:
+      containers:
+      - env:
+        - name: DT_CUSTOM_PROP
+          value: keptn_project=hipstershop keptn_service=paymentservice keptn_stage=staging
+            keptn_deployment=primary
+        - name: PORT
+          value: "50051"
+        image: gcr.io/dynatrace-demoability/paymentservice:9e830c2
+        livenessProbe:
+          exec:
+            command:
+            - /bin/grpc_health_probe
+            - -addr=:50051
+        name: server
+        ports:
+        - containerPort: 50051
+        readinessProbe:
+          exec:
+            command:
+            - /bin/grpc_health_probe
+            - -addr=:50051
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+      imagePullSecrets:
+      - name: regcred
+      terminationGracePeriodSeconds: 5
+status: {}
