@@ -14,6 +14,6 @@ spec:
   - route:
     - destination:
         host: loadgenerator-canary.hipstershop-staging.svc.cluster.local
+      weight: 100
     - destination:
         host: loadgenerator-primary.hipstershop-staging.svc.cluster.local
-      weight: 100
