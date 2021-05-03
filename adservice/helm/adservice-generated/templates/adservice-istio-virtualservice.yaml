@@ -13,4 +13,7 @@ spec:
   http:
   - route:
     - destination:
-        host: adservice.hipstershop-staging.svc.cluster.local
+        host: adservice-canary.hipstershop-staging.svc.cluster.local
+      weight: 100
+    - destination:
+        host: adservice-primary.hipstershop-staging.svc.cluster.local
