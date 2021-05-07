@@ -30,7 +30,6 @@ spec:
             result: fail
       tasks:
       - name: rollback
-        properties: null
     - name: delivery-direct
       tasks:
       - name: deployment
@@ -75,7 +74,6 @@ spec:
             result: fail
       tasks:
       - name: rollback
-        properties: null
     - name: delivery-direct
       triggeredOn:
       - event: staging.delivery-direct.finished
