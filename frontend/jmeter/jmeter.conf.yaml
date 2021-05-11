@@ -3,7 +3,7 @@ spec_version: '0.1.0'
 workloads:
   - teststrategy: performance
     vuser: 5
-    loopcount: 10
-    thinktime: 500
+    loopcount: 5
+    thinktime: 750
     script: jmeter/load.jmx
     acceptederrorrate: 1.0
